@@ -1,0 +1,52 @@
+.content-table {
+  max-height: 700px;
+  border-collapse: collapse;
+  margin: 2rem 0;
+  min-width: 300px;
+  border-radius: 5px 5px 0 0;
+  overflow: hidden;
+  overflow-y: scroll;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.content-table thead tr {
+  background-color: #008979;
+  color: #fff;
+  text-align: left;
+  font-weight: bold;
+}
+
+.content-table th,
+.content-table td {
+  padding: 12px 15px;
+}
+.content-table tbody tr:nth-of-type(odd) {
+  background-color: #f3f3f3;
+}
+.content-table tbody tr:last-of-type {
+  border-bottom: 2px solid #008979;
+}
+.content-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.message {
+  color: #fff;
+  padding: 7px 5px;
+  margin: 10px 0;
+  border-radius: 5px;
+}
+.success {
+  background-color: #008979;
+}
+
+.failed {
+  background-color: red;
+}
+
+#csv_file {
+  padding: 0.6rem;
+  border: 1px solid gray;
+  border-radius: 7px;
+  background-color: honeydew;
+}
