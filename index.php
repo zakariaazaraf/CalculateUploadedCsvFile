@@ -2,8 +2,8 @@
     
     require_once './app/config/config.php';
     require_once './app/core/database.php';
-    require_once './app/classes/upload.class.php';
-    require_once './app/classes/validate.class.php';
+    require_once './app/classes/Upload.php';
+    require_once './app/classes/Validate.php';
     require_once './app/core/controller.php';
 ?>
 

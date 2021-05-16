@@ -24,8 +24,8 @@
                     $upload->truncateTable();
     
                     $parsedCsvFile = $upload->parseCsvFileToArray($filename);
-                    $recordsInserted = $upload->insertAllRecords();
-    
+                    $recordsInserted = $upload->insertAllRecords($parsedCsvFile);
+
                     if( $parsedCsvFile && $recordsInserted ){
     
                         $calculatedResult = $upload->calculateCsvArray($parsedCsvFile);
