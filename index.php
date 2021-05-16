@@ -73,9 +73,9 @@
         <?php 
             if(isset($response) && !empty($response)){
                 if($response['success']){
-                    if(isset($response['filename'])) {
-                        echo '<a href="download.php?filename=' . $response['filename'] . '" id="download-csv">Download Report</a>';
-                    }
+                    
+                    echo '<a href="" >Download Report</a>';
+                    
                 }
             }
         ?>

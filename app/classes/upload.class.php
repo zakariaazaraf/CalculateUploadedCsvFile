@@ -4,6 +4,8 @@
     class Upload {
 
         private $db;
+        private $parsedCsvFileAsArray = array();
+        private $calculatedArray = array();
 
         public function __construct() {
             $this->db = new Database;
@@ -32,15 +34,18 @@
             exit;
         }
 
-        public function calculatedArray($data){
-            $result = array();
+        public function calculateCsvArray($data){
+
             foreach($data as $line){
-                $result[] = array(
-                    $line->category,
-                    $line->price * $line->amount
-                );
+
+                if( ! $this->isCategoryExisted($line)){
+                    $this->calculatedArray[] = array(
+                        $line[0], // Category
+                        $line[1] * $line[2] // Total = Price * Amount
+                    );
+                }
             };
-            return $result;
+            return $this->calculatedArray;
         }
 
         public function insertAllRecords($data){
@@ -58,22 +63,21 @@
             }
         }
 
-        public function parseCsvFileToArray(){
+        public function parseCsvFileToArray( $filename ){
 
-            $filePointer = fopen( $this->destination, 'r');
+            $filePointer = fopen( $filename, 'r');
 
             if ( $filePointer ) {
                 
-                while ( $row = fgetcsv( $filePointer, '1024', ',' )) {  
+                while ( $line = fgetcsv( $filePointer, 1000, ',' )) {  
 
-                    if( $this->isValidLineFormat(3, $row)){
+                    if( $this->isValidLineFormat(3, $line)){
                         
-                        if( ! $this->isCategoryExisted($row) ){
-                            $this->parsedCsvData[] = array(
-                                strtolower($row[0]) , // Category
-                                $row[1] * $row[2]  // Price * Amount => Total                 
-                            );
-                        }
+                        $this->parsedCsvFileAsArray[] = array(
+                            $line[0] , // Category
+                            $line[1] ,  // Price 
+                            $line[2]   // Amount
+                        );
                     }else{
                         return false;
                     }
@@ -82,7 +86,7 @@
                 
                 fclose( $filePointer );
                 
-                return $this->parsedCsvData;
+                return $this->parsedCsvFileAsArray;
             }
             
             return false;
@@ -90,14 +94,14 @@
 
         private function isCategoryExisted($row){
 
-            for($i = 0 ; $i < count( $this->parsedCsvData ); $i++){
-
+            for($i = 0 ; $i < count( $this->calculatedArray ); $i++){
                 // check if the category already exists in the parsed csv array
-                if( $this->parsedCsvData[$i][0] === strtolower($row[0]) ) {
-                    $this->parsedCsvData[$i][1] += $row[1] * $row[2]; // Update the category's total value
+                if( $this->calculatedArray[$i][0] === $row[0] ) {
+                    $this->calculatedArray[$i][1] += $row[1] * $row[2]; // Update the category's total value
                     return true;
                 }
             }
+
             return false;
         }
 

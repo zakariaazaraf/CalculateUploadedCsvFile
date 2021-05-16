@@ -11,7 +11,24 @@
             $isValidType = $validateFile->isValidType( array('csv') );
 
             if( $isValidSize && $isValidType ){
-                echo 'File Size And Type Respected';
+                
+                $upload = new Upload();
+                $filename = $_FILES['csv_file']['tmp_name'];
+
+                // Check File Format
+                $parsedCsvFile = $upload->parseCsvFileToArray($filename);
+                if( $parsedCsvFile ){
+                    
+                    $calculatedResult = $upload->calculateCsvArray($parsedCsvFile);
+
+                    $response = [
+                        'success' => true,
+                        'content' => $calculatedResult
+                    ];
+                }else{
+                    echo 'File Format Inccoredt';
+                }
+
             }else{
                 echo 'Check file type and size';
             }
