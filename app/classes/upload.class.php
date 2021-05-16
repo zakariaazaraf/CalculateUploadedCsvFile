@@ -23,7 +23,7 @@
 
             $filePointe = fopen('php://output', 'w');
 
-            $filename = "claromentis.csv";
+            $filename = "claromentis" . date('Y-m-d') . ".csv";
 
             header('Content-type: application/csv');
             header('Content-Disposition: attachment; filename='.$filename);
@@ -48,19 +48,14 @@
             return $this->calculatedArray;
         }
 
-        public function insertAllRecords($data){
+        public function insertAllRecords(){
 
-            $this->db->query('INSERT INTO file (category, price, amount) VALUES (:category, :price, :amount)');
-
-            $this->db->bind(':category', $data[0]);
-            $this->db->bind(':price', $data[1]);
-            $this->db->bind(':amount', $data[2]);
-
-            if ($this->db->execute()) {
-                return true;
-            } else {
-                return false;
+            foreach($this->parsedCsvFileAsArray as $record){
+                if(!$this->insertRecord($record)){
+                    return false;
+                }
             }
+            return true;
         }
 
         public function parseCsvFileToArray( $filename ){
@@ -119,6 +114,31 @@
                 return false;
             }
             return true;
+        }
+
+        private function insertRecord($record){
+
+            $this->db->query('INSERT INTO file (category, price, amount) VALUES (:category, :price, :amount)');
+
+            $this->db->bind(':category', $record[0]);
+            $this->db->bind(':price', $record[1]);
+            $this->db->bind(':amount', $record[2]);
+
+            if ($this->db->execute()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        public function truncateTable(){
+
+            $this->db->query('TRUNCATE TABLE file');
+            if ($this->db->execute()) {
+                return true;
+            } else {
+                return false;
+            }
         }
 
     }

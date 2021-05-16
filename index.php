@@ -14,7 +14,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculate Uploaded CSV File</title>
-    <link rel="stylesheet" href="./assets/css/libs/dataTables.css">
+    
     <!-- main css file -->
     <link rel="stylesheet" href="./assets/css/custom/style.css">
 </head>
@@ -74,14 +74,17 @@
             if(isset($response) && !empty($response)){
                 if($response['success']){
                     
-                    echo '<a href="" >Download Report</a>';
-                    
+                    ?>
+                        <form action="" method='POST'>
+                            <input type="submit" value='Download Report' name='download'>
+                        </form>
+                    <?php
                 }
             }
         ?>
     </div>
     
-    <script src='./assets/js/libs/jquery.js'></script>
+    <!-- <script src='./assets/js/libs/jquery.js'></script> -->
     <script src='./assets/js/custom/main.js'></script>
 </body>
 </html>

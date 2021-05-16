@@ -34,9 +34,6 @@
 
         public function isFileUploaded(){
             
-            if( isset($file['csv_file']) ){
-                return false;
-            }
             if( $this->error === UPLOAD_ERR_OK ){
                 return true;
             }

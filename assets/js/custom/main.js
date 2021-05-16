@@ -4,14 +4,6 @@ const message = document.querySelector('#message')
 const bodyContent = document.querySelector('.body-content');
 const downloadLink = document.querySelector('.downloadFile');
 
-/* $(document).ready(function() {
-    $('.content-table').DataTable( {
-        "scrollY":        "200px",
-        "scrollCollapse": true,
-        "paging":         true,
-    } );
-} ); */
-
 
 
 form.addEventListener('submit', (event)=>{
