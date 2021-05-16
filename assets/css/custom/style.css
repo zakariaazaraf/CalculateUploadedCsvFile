@@ -1,3 +1,23 @@
+/* Variables */
+:root {
+  --main-bg: #008979;
+  --btn-color: #fff;
+  --btn-bg: #008979;
+  --btn-transition: all 0.15 ease;
+}
+
+/* Buttons */
+.btn {
+  color: var(--btn-color);
+  background-color: var(--btn-bg);
+}
+
+.btn:hover {
+  color: var(--btn-color);
+  transition: var(--btn-transition);
+  opacity: 0.85;
+}
+
 .content-table {
   max-height: 700px;
   border-collapse: collapse;
@@ -10,7 +30,7 @@
 }
 
 .content-table thead tr {
-  background-color: #008979;
+  background-color: var(--main-bg);
   color: #fff;
   text-align: left;
   font-weight: bold;
@@ -37,16 +57,17 @@
   border-radius: 5px;
 }
 .success {
-  background-color: #008979;
+  background-color: var(--main-bg);
 }
 
 .failed {
   background-color: red;
 }
 
-#csv_file {
-  padding: 0.6rem;
-  border: 1px solid gray;
+.csv_file {
+  padding: 7px;
+  border: 1px dashed #000;
   border-radius: 7px;
   background-color: honeydew;
+  cursor: pointer;
 }

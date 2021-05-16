@@ -4,13 +4,19 @@
     class Upload {
 
         private $db;
-        //private $parsedCsvFileAsArray = array();
         private $calculatedArray = array(); 
 
         public function __construct() {
             $this->db = new Database;
         }
 
+        /**
+         *  @param resource
+         * 
+         *  @return array 
+         *  
+         *  Parse CSV file to array
+         */
         public function parseCsvFileToArray( $filename ){
 
             $parsedCsvFileAsArray = array();
@@ -43,6 +49,14 @@
             return false;
         }
 
+        /**
+         *  @param int
+         *  @param array
+         * 
+         *  @return bool
+         *  
+         *  Validate Csv Line Format
+         */
         public function isValidLineFormat($columnCount, $row){
             if(count($row) !== $columnCount){
                 return false;
@@ -59,6 +73,13 @@
             return true;
         }
 
+        /**
+         *  @param array
+         * 
+         *  @return array
+         *  
+         *  Calculate Parsed CSV Array
+         */
         public function calculateCsvArray($data){
 
             foreach($data as $line){
@@ -73,6 +94,13 @@
             return $this->calculatedArray;
         }
 
+        /**
+         *  @param array
+         * 
+         *  @return bool
+         *  
+         *  Check if the category existed and modify the total value
+         */
         private function isCategoryExisted($row){
       
             for($i = 0 ; $i < count( $this->calculatedArray ); $i++){
@@ -86,6 +114,12 @@
             return false;
         }
 
+        /**
+         * 
+         *  @return bool
+         *  
+         *  Truncate File Table, To Make the Progeamme Multiple Time
+         */
         public function truncateTable(){
 
             $this->db->query('TRUNCATE TABLE file');
@@ -96,6 +130,13 @@
             }
         }
 
+        /**
+         *  @param array
+         * 
+         *  @return bool
+         *  
+         *  Insert All the Lines of the File, 
+         */
         public function insertAllRecords($parsedCsvFileAsArray){
 
             foreach($parsedCsvFileAsArray as $record){
@@ -104,14 +145,16 @@
                 }
             }
             return true;
-            /* foreach($this->parsedCsvFileAsArray as $record){
-                if(!$this->insertRecord($record)){
-                    return false;
-                }
-            }
-            return true; */
+
         }
 
+        /**
+         *  @param array
+         * 
+         *  @return bool
+         *  
+         *  Insert The Passed Line Of a File
+         */
         public function insertRecord($record){
 
             $this->db->query('INSERT INTO file (category, price, amount) VALUES (:category, :price, :amount)');
@@ -127,6 +170,12 @@
             }
         }
 
+        /**
+         * 
+         *  @return array
+         *  
+         *  Get the All the Line Of a File From The DB
+         */
         public function getAllRecords(){
             
             $this->db->query('SELECT * FROM file');
@@ -136,11 +185,18 @@
             return $results;
         }
 
+        /**
+         *  @param array
+         * 
+         *  @return resource
+         *  
+         *  Download a Report File
+         */
         public function downloadFileReport($data){
 
             $filePointe = fopen('php://output', 'w');
 
-            $filename = "claromentis" . date('Y-m-d') . ".csv";
+            $filename = "claromentis-" . date('Y-m-d') . ".csv";
 
             header('Content-type: application/csv');
             header('Content-Disposition: attachment; filename='.$filename);

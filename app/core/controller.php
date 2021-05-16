@@ -4,6 +4,7 @@
         
         $upload = new Upload();
         
+        // Check if The File Uploaded
         if( isset($_FILES['csv_file']) ){
             
             $validateFile = new ValidateFile( $_FILES );
@@ -15,18 +16,18 @@
     
                 if( $isValidSize && $isValidType ){
                     
-                    $filename = $_FILES['csv_file']['tmp_name'];
-    
-                    /*
-                        Truncate Table Before Each Upload
-                        => To be able to upload multiple time
-                    */ 
-                    $upload->truncateTable();
-    
+                    $filename = $_FILES['csv_file']['tmp_name'];    
+                    
                     $parsedCsvFile = $upload->parseCsvFileToArray($filename);
-                    $recordsInserted = $upload->insertAllRecords($parsedCsvFile);
+                    
+                    if( $parsedCsvFile ){
+                        /*
+                            Truncate Table Before Each Upload
+                            => To be able to upload multiple time
+                        */
+                        $upload->truncateTable();
 
-                    if( $parsedCsvFile && $recordsInserted ){
+                        $upload->insertAllRecords($parsedCsvFile);
     
                         $calculatedResult = $upload->calculateCsvArray($parsedCsvFile);
     
@@ -62,6 +63,7 @@
             ];
         }
 
+        // Check if The Request Came From The Download Link
         if( isset($_POST['download']) ){
 
             $records = $upload->getAllRecords();

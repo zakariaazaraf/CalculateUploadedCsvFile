@@ -11,18 +11,6 @@
 
     class UploadTest extends TestCase{
         
-        /* public function testparseCsvFileToArray(){
-            
-            $upload = new Upload();
-            $filename = "assets/test.csv";
-
-            $parseCsvFile = $upload->parseCsvFileToArray($filename);
-            print_r($parseCsvFile);
-
-            //$this->assertIsArray($parseCsvFile);
-
-        } */
-       
         public function testisValidLineFormat(){
 
             $upload = new Upload();
@@ -32,18 +20,6 @@
             $this->assertEquals(true, $isValidLineFormat);
 
         }
-
-        /* public function testcalculateCsvArray(){
-            $data = array(
-                array('Hotel', 10, 2),
-                array('Fuel', 1.21, 24),
-                array('Food', 31, 6),
-                array('Hotel', 10, 2),
-                array('Fuel', 1.21, 24)
-            )
-            $upload->calculateCsvArray($data);
-            
-        } */
 
         public function testinsertRecord(){
 
